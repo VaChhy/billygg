@@ -33,15 +33,15 @@
         
         @layer utilities {
             .neon-text {
-                text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
+                text-shadow: 0 0 3px currentColor, 0 0 6px currentColor, 0 0 12px currentColor;
             }
             .neon-border {
-                box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, inset 0 0 5px currentColor;
+                box-shadow: 0 0 3px currentColor, 0 0 6px currentColor, inset 0 0 3px currentColor;
             }
             .btn-retro {
                 @apply rounded-md font-retro transition-all duration-150 neon-border 
                 bg-retroGray active:scale-95 active:brightness-125 select-none
-                text-base;
+                text-[clamp(0.7rem,2.2vw,0.85rem)];
             }
             .btn-round {
                 @apply rounded-full flex items-center justify-center 
@@ -50,100 +50,92 @@
             }
         }
 
-        /* AUTO MOBILE SIZE — fits any screen automatically */
+        /* Auto fit all mobile — NO SCROLL */
         body {
             overscroll-behavior: none;
             touch-action: none;
-            width: auto;
-            height: auto;
+            width: 100vw;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-darkBg flex flex-col items-center justify-start py-4 px-3 font-retro text-white">
-    <!-- Game Title - Auto scaled -->
-    <h1 class="text-[clamp(1.4rem,5vw,2.8rem)] text-neonBlue neon-text mb-4 tracking-wider text-center leading-tight">
+<body class="bg-darkBg flex flex-col items-center justify-center py-2 px-3 font-retro text-white">
+    <!-- Game Title - smaller size -->
+    <h1 class="text-[clamp(1.2rem,4vw,2rem)] text-neonBlue neon-text mb-2 tracking-wider text-center leading-tight">
         BILLY OT EY TVER GAME
     </h1>
 
-    <div class="flex flex-col items-center gap-4 w-full max-w-md">
-        <!-- Game Board - Auto fit screen width -->
+    <div class="flex flex-col items-center gap-2 w-full max-w-xs">
+        <!-- Game Board - SMALLER size -->
         <div class="relative w-full flex justify-center">
             <canvas 
                 id="tetrisCanvas" 
-                class="bg-darkBg border-2 border-neonBlue neon-border rounded-md w-[clamp(260px,80vw,320px)] h-[clamp(520px,160vw,640px)]"
+                class="bg-darkBg border-2 border-neonBlue neon-border rounded-md w-[clamp(220px,65vw,260px)] h-[clamp(440px,130vw,520px)]"
             ></canvas>
-            <div class="absolute top-2 left-1/2 -translate-x-1/2 text-neonYellow neon-text text-[clamp(0.8rem,2.5vw,1rem)] whitespace-nowrap">
+            <div class="absolute top-1 left-1/2 -translate-x-1/2 text-neonYellow neon-text text-[clamp(0.7rem,2vw,0.8rem)] whitespace-nowrap">
                 SCORE: <span id="scoreDisplay">0</span>
             </div>
-            <div class="absolute top-2 right-2 text-neonGreen neon-text text-[clamp(0.8rem,2.5vw,1rem)]">
+            <div class="absolute top-1 right-1 text-neonGreen neon-text text-[clamp(0.7rem,2vw,0.8rem)]">
                 LVL: <span id="levelDisplay">1</span>
             </div>
         </div>
 
-        <!-- Retro Console Panel - Auto size, perfect touch buttons -->
-        <div class="w-full bg-gray-900/80 p-3 rounded-lg neon-border border-neonPink">
-            <!-- Top Buttons: START - PAUSE - DROP -->
-            <div class="grid grid-cols-3 gap-2 mb-4">
-                <button id="startBtn" class="btn-retro py-2 text-neonGreen border-neonGreen hover:bg-neonGreen/20 text-[clamp(0.9rem,2.8vw,1.1rem)]">
+        <!-- Console Panel - compact, removed DROP button -->
+        <div class="w-full bg-gray-900/80 p-2 rounded-lg neon-border border-neonPink">
+            <!-- Top Buttons: START - PAUSE only -->
+            <div class="grid grid-cols-2 gap-2 mb-3">
+                <button id="startBtn" class="btn-retro py-1.5 text-neonGreen border-neonGreen hover:bg-neonGreen/20">
                     START
                 </button>
-                <button id="pauseBtn" class="btn-retro py-2 text-neonRed border-neonRed hover:bg-neonRed/20 text-[clamp(0.9rem,2.8vw,1.1rem)]">
+                <button id="pauseBtn" class="btn-retro py-1.5 text-neonRed border-neonRed hover:bg-neonRed/20">
                     PAUSE
-                </button>
-                <button id="dropBtn" class="btn-retro py-2 text-neonOrange border-neonOrange hover:bg-neonOrange/20 text-[clamp(0.9rem,2.8vw,1.1rem)]">
-                    DROP
                 </button>
             </div>
 
-            <!-- Controls Area -->
-            <div class="flex justify-between items-center px-2">
-                <!-- Directional Pad - good touch size -->
+            <!-- Controls Area - UP=ROTATE, DOWN=DROP, LEFT/RIGHT=MOVE -->
+            <div class="flex justify-center items-center">
+                <!-- Directional Pad - full 4 directions -->
                 <div class="flex flex-col items-center gap-1">
-                    <button id="upBtn" class="btn-round w-[clamp(55px,15vw,70px)] h-[clamp(55px,15vw,70px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.2rem,4vw,1.6rem)]">
+                    <!-- UP Button = ROTATE -->
+                    <button id="upBtn" class="btn-round w-[clamp(50px,13vw,60px)] h-[clamp(50px,13vw,60px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.1rem,3.2vw,1.3rem)]">
                         <i class="fa fa-arrow-up"></i>
                     </button>
-                    <div class="flex gap-1">
-                        <button id="leftBtn" class="btn-round w-[clamp(55px,15vw,70px)] h-[clamp(55px,15vw,70px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.2rem,4vw,1.6rem)]">
+                    <div class="flex gap-2">
+                        <button id="leftBtn" class="btn-round w-[clamp(50px,13vw,60px)] h-[clamp(50px,13vw,60px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.1rem,3.2vw,1.3rem)]">
                             <i class="fa fa-arrow-left"></i>
                         </button>
-                        <button id="downBtn" class="btn-round w-[clamp(55px,15vw,70px)] h-[clamp(55px,15vw,70px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.2rem,4vw,1.6rem)]">
+                        <!-- DOWN Button = DROP -->
+                        <button id="downBtn" class="btn-round w-[clamp(50px,13vw,60px)] h-[clamp(50px,13vw,60px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.1rem,3.2vw,1.3rem)]">
                             <i class="fa fa-arrow-down"></i>
                         </button>
-                        <button id="rightBtn" class="btn-round w-[clamp(55px,15vw,70px)] h-[clamp(55px,15vw,70px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.2rem,4vw,1.6rem)]">
+                        <button id="rightBtn" class="btn-round w-[clamp(50px,13vw,60px)] h-[clamp(50px,13vw,60px)] text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-[clamp(1.1rem,3.2vw,1.3rem)]">
                             <i class="fa fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- ROTATE + NEXT PIECE -->
-                <div class="flex flex-col items-center gap-2">
-                    <button id="rotateBtn" class="btn-retro w-[clamp(100px,28vw,130px)] h-[clamp(50px,12vw,65px)] text-neonYellow border-neonYellow hover:bg-neonYellow/20 text-[clamp(0.9rem,2.8vw,1.1rem)]">
-                        ROTATE
-                    </button>
-                    <div>
-                        <p class="text-neonPurple neon-text text-[clamp(0.7rem,2.2vw,0.9rem)] mb-1 text-center">NEXT</p>
-                        <canvas 
-                            id="nextPieceCanvas" 
-                            width="80" 
-                            height="80" 
-                            class="bg-darkBg border border-neonPurple neon-border rounded-sm w-[clamp(70px,20vw,90px)] h-[clamp(70px,20vw,90px)]"
-                        ></canvas>
-                    </div>
+                <!-- NEXT PIECE display -->
+                <div class="ml-4">
+                    <p class="text-neonPurple neon-text text-[clamp(0.6rem,1.8vw,0.75rem)] mb-0.5 text-center">NEXT</p>
+                    <canvas 
+                        id="nextCanvas" 
+                        width="60" 
+                        height="60" 
+                        class="bg-darkBg border border-neonPurple neon-border rounded-sm w-[clamp(55px,15vw,65px)] h-[clamp(55px,15vw,65px)]"
+                    ></canvas>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== GAME CONFIGURATION - AUTO RESPONSIVE =====
+        // ===== GAME CONFIGURATION - SMALL & FITTED =====
         const COLS = 10;
         const ROWS = 20;
-        // Block size adjusts automatically based on screen
-        const getBlockSize = () => Math.min(window.innerWidth * 0.08, 32);
+        const getBlockSize = () => Math.min(window.innerWidth * 0.07, 26);
         let BLOCK_SIZE = getBlockSize();
         let CANVAS_WIDTH = COLS * BLOCK_SIZE;
         let CANVAS_HEIGHT = ROWS * BLOCK_SIZE;
@@ -176,9 +168,9 @@
         const canvas = document.getElementById('tetrisCanvas');
         const ctx = canvas.getContext('2d');
         
-        const nextCanvas = document.getElementById('nextPieceCanvas');
+        const nextCanvas = document.getElementById('nextCanvas');
         const nextCtx = nextCanvas.getContext('2d');
-        const NEXT_BLOCK_SIZE = 18;
+        const NEXT_BLOCK_SIZE = 14;
 
         // ===== GAME STATE =====
         let board = createBoard();
@@ -213,7 +205,7 @@
             const color = COLORS[colorIndex];
             context.fillStyle = color;
             context.shadowColor = color;
-            context.shadowBlur = 8;
+            context.shadowBlur = 6;
             context.fillRect(x * size, y * size, size - 1, size - 1);
             
             // Inner highlight like classic blocks
@@ -364,16 +356,17 @@
             ctx.fillStyle = 'rgba(0,0,0,0.7)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             
-            ctx.font = '20px "Press Start 2P"';
+            // Show your custom text
+            ctx.font = '12px "Press Start 2P"';
             ctx.fillStyle = '#ff0040';
             ctx.shadowColor = '#ff0040';
-            ctx.shadowBlur = 12;
+            ctx.shadowBlur = 10;
             ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+            ctx.fillText('LENG ORN ORN SOS', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
             ctx.shadowBlur = 0;
         }
 
-        // ===== HARD DROP FUNCTION =====
+        // ===== HARD DROP = NOW ON DOWN BUTTON =====
         function hardDrop() {
             if (!gameRunning || gamePaused) return;
             while (!checkCollision(currentPiece, 0, 1)) {
@@ -420,10 +413,10 @@
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
                 
-                ctx.font = '18px "Press Start 2P"';
+                ctx.font = '14px "Press Start 2P"';
                 ctx.fillStyle = '#fff000';
                 ctx.shadowColor = '#fff000';
-                ctx.shadowBlur = 12;
+                ctx.shadowBlur = 10;
                 ctx.textAlign = 'center';
                 ctx.fillText('PAUSED', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
                 ctx.shadowBlur = 0;
@@ -436,34 +429,32 @@
         // Button Events
         document.getElementById('startBtn').addEventListener('click', startGame);
         document.getElementById('pauseBtn').addEventListener('click', pauseGame);
-        document.getElementById('dropBtn').addEventListener('click', hardDrop);
         
+        // UP = ROTATE
+        document.getElementById('upBtn').addEventListener('click', () => {
+            if (!gameRunning || gamePaused) return;
+            rotatePiece(currentPiece);
+            drawBoard(); 
+            drawCurrentPiece();
+        });
+
+        // DOWN = DROP
+        document.getElementById('downBtn').addEventListener('click', () => {
+            hardDrop();
+        });
+
         document.getElementById('leftBtn').addEventListener('click', () => {
             if (!gameRunning || gamePaused) return;
             if (!checkCollision(currentPiece, -1, 0)) currentPiece.x--;
-            drawBoard(); drawCurrentPiece();
+            drawBoard(); 
+            drawCurrentPiece();
         });
-        
+
         document.getElementById('rightBtn').addEventListener('click', () => {
             if (!gameRunning || gamePaused) return;
             if (!checkCollision(currentPiece, 1, 0)) currentPiece.x++;
-            drawBoard(); drawCurrentPiece();
-        });
-        
-        document.getElementById('downBtn').addEventListener('click', () => {
-            if (!gameRunning || gamePaused) return;
-            if (!checkCollision(currentPiece, 0, 1)) {
-                currentPiece.y++;
-                score += 1;
-                document.getElementById('scoreDisplay').textContent = score;
-            }
-            drawBoard(); drawCurrentPiece();
-        });
-        
-        document.getElementById('rotateBtn').addEventListener('click', () => {
-            if (!gameRunning || gamePaused) return;
-            rotatePiece(currentPiece);
-            drawBoard(); drawCurrentPiece();
+            drawBoard(); 
+            drawCurrentPiece();
         });
 
         // Keyboard Controls
@@ -477,20 +468,12 @@
                 case 'ArrowRight':
                     if (!checkCollision(currentPiece, 1, 0)) currentPiece.x++;
                     break;
-                case 'ArrowDown':
-                case 'ArrowDown':
-                    if (!checkCollision(currentPiece, 0, 1)) {
-                        currentPiece.y++;
-                        score += 1;
-                        document.getElementById('scoreDisplay').textContent = score;
-                    }
-                    break;
-                case 'ArrowUp':
-                    rotatePiece(currentPiece);
-                    break;
-                case ' ': // Space = Drop
+                case 'ArrowDown': // Keyboard DOWN = DROP too
                     hardDrop();
                     return;
+                case 'ArrowUp': // Keyboard UP = ROTATE too
+                    rotatePiece(currentPiece);
+                    break;
             }
             drawBoard();
             drawCurrentPiece();
