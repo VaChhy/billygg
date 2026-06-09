@@ -38,13 +38,10 @@
             .neon-border {
                 box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, inset 0 0 5px currentColor;
             }
-            .grid-cell {
-                @apply w-6 h-6 border-[0.5px] border-gray-800;
-            }
             .btn-retro {
                 @apply rounded-md font-retro transition-all duration-150 neon-border 
                 bg-retroGray active:scale-95 active:brightness-125 select-none
-                text-base md:text-sm;
+                text-lg;
             }
             .btn-round {
                 @apply rounded-full flex items-center justify-center 
@@ -53,83 +50,87 @@
             }
         }
 
-        /* Prevent scrolling when playing on mobile */
         body {
             overscroll-behavior: none;
             touch-action: none;
+            width: 1080px;
+            height: 1920px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-darkBg min-h-screen flex flex-col items-center justify-center py-4 px-2 font-retro text-white overflow-x-hidden">
+<body class="bg-darkBg flex flex-col items-center justify-start pt-12 px-8 font-retro text-white">
     <!-- Game Title -->
-    <h1 class="text-[clamp(1.5rem,5vw,3rem)] text-neonBlue neon-text mb-6 tracking-wider text-center leading-tight">
+    <h1 class="text-[4.5rem] text-neonBlue neon-text mb-12 tracking-wider text-center leading-tight">
         BILLY OT EY TVER GAME
     </h1>
 
-    <div class="flex flex-col items-center gap-6 w-full max-w-lg">
-        <!-- Game Board -->
+    <div class="flex flex-col items-center gap-10 w-full">
+        <!-- Game Board - H5 Size -->
         <div class="relative">
             <canvas 
                 id="tetrisCanvas" 
-                width="300" 
-                height="600" 
-                class="bg-darkBg border-2 border-neonBlue neon-border rounded-md w-[280px] h-[560px] sm:w-[300px] sm:h-[600px]"
+                width="540" 
+                height="1080" 
+                class="bg-darkBg border-4 border-neonBlue neon-border rounded-md"
             ></canvas>
-            <div class="absolute top-3 left-3 text-neonYellow neon-text text-xs sm:text-sm">
+            <div class="absolute top-6 left-6 text-neonYellow neon-text text-2xl">
                 SCORE: <span id="scoreDisplay">0</span>
             </div>
-            <div class="absolute top-3 right-3 text-neonGreen neon-text text-xs sm:text-sm">
+            <div class="absolute top-6 right-6 text-neonGreen neon-text text-2xl">
                 LEVEL: <span id="levelDisplay">1</span>
             </div>
         </div>
 
-        <!-- Retro Console Panel - Mobile Friendly -->
-        <div class="w-full bg-gray-900/80 p-4 rounded-lg neon-border border-neonPink">
+        <!-- Retro Console Panel - Big Buttons for H5 -->
+        <div class="w-[900px] bg-gray-900/80 p-8 rounded-lg neon-border border-neonPink">
             <!-- Top Buttons: START - PAUSE - DROP -->
-            <div class="grid grid-cols-3 gap-3 mb-6">
-                <button id="startBtn" class="btn-retro py-3 text-neonGreen border-neonGreen hover:bg-neonGreen/20">
+            <div class="grid grid-cols-3 gap-6 mb-10">
+                <button id="startBtn" class="btn-retro py-5 text-neonGreen border-neonGreen hover:bg-neonGreen/20 text-3xl">
                     START
                 </button>
-                <button id="pauseBtn" class="btn-retro py-3 text-neonRed border-neonRed hover:bg-neonRed/20">
+                <button id="pauseBtn" class="btn-retro py-5 text-neonRed border-neonRed hover:bg-neonRed/20 text-3xl">
                     PAUSE
                 </button>
-                <button id="dropBtn" class="btn-retro py-3 text-neonOrange border-neonOrange hover:bg-neonOrange/20">
+                <button id="dropBtn" class="btn-retro py-5 text-neonOrange border-neonOrange hover:bg-neonOrange/20 text-3xl">
                     DROP
                 </button>
             </div>
 
             <!-- Controls Area -->
-            <div class="flex justify-between items-center">
-                <!-- Directional Pad (Big for touch) -->
-                <div class="flex flex-col items-center gap-2">
-                    <button id="upBtn" class="btn-round w-16 h-16 sm:w-14 sm:h-14 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-xl">
+            <div class="flex justify-between items-center px-12">
+                <!-- Directional Pad -->
+                <div class="flex flex-col items-center gap-4">
+                    <button id="upBtn" class="btn-round w-32 h-32 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-5xl">
                         <i class="fa fa-arrow-up"></i>
                     </button>
-                    <div class="flex gap-2">
-                        <button id="leftBtn" class="btn-round w-16 h-16 sm:w-14 sm:h-14 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-xl">
+                    <div class="flex gap-4">
+                        <button id="leftBtn" class="btn-round w-32 h-32 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-5xl">
                             <i class="fa fa-arrow-left"></i>
                         </button>
-                        <button id="downBtn" class="btn-round w-16 h-16 sm:w-14 sm:h-14 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-xl">
+                        <button id="downBtn" class="btn-round w-32 h-32 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-5xl">
                             <i class="fa fa-arrow-down"></i>
                         </button>
-                        <button id="rightBtn" class="btn-round w-16 h-16 sm:w-14 sm:h-14 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-xl">
+                        <button id="rightBtn" class="btn-round w-32 h-32 text-neonBlue border-neonBlue hover:bg-neonBlue/20 text-5xl">
                             <i class="fa fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- ROTATE + NEXT PIECE -->
-                <div class="flex flex-col items-center gap-4">
-                    <button id="rotateBtn" class="btn-retro w-24 h-16 text-neonYellow border-neonYellow hover:bg-neonYellow/20 text-sm">
+                <div class="flex flex-col items-center gap-8">
+                    <button id="rotateBtn" class="btn-retro w-48 h-32 text-neonYellow border-neonYellow hover:bg-neonYellow/20 text-3xl">
                         ROTATE
                     </button>
                     <div>
-                        <p class="text-neonPurple neon-text text-xs mb-1 text-center">NEXT</p>
+                        <p class="text-neonPurple neon-text text-xl mb-3 text-center">NEXT</p>
                         <canvas 
                             id="nextPieceCanvas" 
-                            width="80" 
-                            height="80" 
-                            class="bg-darkBg border border-neonPurple neon-border rounded-sm"
+                            width="160" 
+                            height="160" 
+                            class="bg-darkBg border-2 border-neonPurple neon-border rounded-sm"
                         ></canvas>
                     </div>
                 </div>
@@ -138,10 +139,10 @@
     </div>
 
     <script>
-        // ===== GAME CONFIGURATION =====
+        // ===== GAME CONFIGURATION - H5 SCALE =====
         const COLS = 10;
         const ROWS = 20;
-        const BLOCK_SIZE = 30;
+        const BLOCK_SIZE = 54;
         const CANVAS_WIDTH = COLS * BLOCK_SIZE;
         const CANVAS_HEIGHT = ROWS * BLOCK_SIZE;
 
@@ -177,7 +178,7 @@
 
         const nextCanvas = document.getElementById('nextPieceCanvas');
         const nextCtx = nextCanvas.getContext('2d');
-        const NEXT_BLOCK_SIZE = 20;
+        const NEXT_BLOCK_SIZE = 32;
 
         // ===== GAME STATE =====
         let board = createBoard();
@@ -212,12 +213,12 @@
             const color = COLORS[colorIndex];
             context.fillStyle = color;
             context.shadowColor = color;
-            context.shadowBlur = 10;
-            context.fillRect(x * size, y * size, size - 1, size - 1);
+            context.shadowBlur = 15;
+            context.fillRect(x * size, y * size, size - 2, size - 2);
             
             // Inner highlight like classic blocks
             context.fillStyle = 'rgba(255,255,255,0.3)';
-            context.fillRect(x * size + 2, y * size + 2, size - 5, size - 5);
+            context.fillRect(x * size + 4, y * size + 4, size - 8, size - 8);
             context.shadowBlur = 0;
         }
 
@@ -363,23 +364,23 @@
             ctx.fillStyle = 'rgba(0,0,0,0.7)';
             ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             
-            ctx.font = '16px "Press Start 2P"';
+            ctx.font = '36px "Press Start 2P"';
             ctx.fillStyle = '#ff0040';
             ctx.shadowColor = '#ff0040';
-            ctx.shadowBlur = 15;
+            ctx.shadowBlur = 20;
             ctx.textAlign = 'center';
             ctx.fillText('GAME OVER', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
             ctx.shadowBlur = 0;
         }
 
-        // ===== NEW: HARD DROP FUNCTION =====
+        // ===== HARD DROP FUNCTION =====
         function hardDrop() {
             if (!gameRunning || gamePaused) return;
             while (!checkCollision(currentPiece, 0, 1)) {
                 currentPiece.y++;
-                score += 2; // Small bonus for dropping fast
+                score += 2;
             }
-            gameStep(); // Lock piece immediately
+            gameStep();
             document.getElementById('scoreDisplay').textContent = score;
         }
 
@@ -419,10 +420,10 @@
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
                 
-                ctx.font = '14px "Press Start 2P"';
+                ctx.font = '32px "Press Start 2P"';
                 ctx.fillStyle = '#fff000';
                 ctx.shadowColor = '#fff000';
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 20;
                 ctx.textAlign = 'center';
                 ctx.fillText('PAUSED', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
                 ctx.shadowBlur = 0;
@@ -432,10 +433,10 @@
             }
         }
 
-        // Button Events (Touch + Click)
+        // Button Events
         document.getElementById('startBtn').addEventListener('click', startGame);
         document.getElementById('pauseBtn').addEventListener('click', pauseGame);
-        document.getElementById('dropBtn').addEventListener('click', hardDrop); // NEW DROP BUTTON
+        document.getElementById('dropBtn').addEventListener('click', hardDrop);
         
         document.getElementById('leftBtn').addEventListener('click', () => {
             if (!gameRunning || gamePaused) return;
